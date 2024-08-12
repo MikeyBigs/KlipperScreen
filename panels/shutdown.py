@@ -54,6 +54,21 @@ class Panel(ScreenPanel):
         buttons.append({"name": _("Cancel"), "response": Gtk.ResponseType.CANCEL, "style": 'dialog-error'})
         self._gtk.Dialog(title, buttons, label, self.reboot_poweroff_confirm, method)
 
+    def activate(self):
+        devices = self._printer.get_power_devices()
+        for x in devices:
+            self.devices[x]['switch'].set_active(self._printer.get_power_device_status(x) == "off") 
+         
+    def load_power_devices(self):
+        devices = self._printer.get_power_devices()
+        for x in devices:
+            self.add_device(x)     
+
+        self.devices[device] = {
+            "row": dev,
+            "switch": switch
+        }    
+    
     def reboot_poweroff_confirm(self, dialog, response_id, method):
         self._gtk.remove_dialog(dialog)
         if response_id == Gtk.ResponseType.ACCEPT:
@@ -61,8 +76,8 @@ class Panel(ScreenPanel):
                 self._screen._ws.send_method("machine.reboot")
                 os.system("systemctl reboot -i")
             else:
-                self._screen._ws.send_method("machine.device_power.off", {"Qidi X-CF Pro": "off"})
-                os.system("systemctl poweroff -i")
+                self._screen._ws.send_method("machine.device_power.off", {(device)}) 
+                
         elif response_id == Gtk.ResponseType.OK:
             if method == "reboot":
                 os.system("systemctl reboot -i")
@@ -72,4 +87,4 @@ class Panel(ScreenPanel):
             if method == "reboot":
                 self._screen._ws.send_method("machine.reboot")
             else:
-                self._screen._ws.send_method("machine.device_power.off", {"Qidi X-CF Pro": "off"})
+                self._screen._ws.send_method("machine.device_power.off", {(device)}) 
