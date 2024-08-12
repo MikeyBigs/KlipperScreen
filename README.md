@@ -1,5 +1,29 @@
 # KlipperScreen With Modfied shutdown.py 
 
+Channged the shutdown button to power off a power device setup in moonraker.conf and printer.cfg. 
+
+Example Using for BBT Manta M8P with CB1
+-------add to to printer.cfg-----
+[output_pin _power]
+pin: PD14
+value: 1
+shutdown_value: 1
+
+[gcode_macro SHUTDOWN]
+gcode:
+  SET_PIN PIN=_power VALUE=0
+  {action_call_remote_method("shutdown_machine")} 
+
+-------add to to moonraker.conf-----
+[power Qidi X-CF Pro]
+type: klipper_device
+object_name: gcode_macro SHUTDOWN
+# The option below locks out requests to toggle the flare
+# when Klipper is printing, however it cannot prevent a
+# direct call to the SET_FLARE gcode macro.
+locked_while_printing: True
+
+
 KlipperScreen is a touchscreen GUI that interfaces with [Klipper](https://github.com/Klipper3d/klipper) via [Moonraker](https://github.com/arksine/moonraker). It allows you to switch between multiple printers and access them from a single location. Notably, it doesn't need to run on the same host as your printer; you can install it on another device and configure the IP address to connect to the printer.
 
 ### Documentation
