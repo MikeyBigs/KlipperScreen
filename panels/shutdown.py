@@ -61,7 +61,7 @@ class Panel(ScreenPanel):
                 self._screen._ws.send_method("machine.reboot")
                 os.system("systemctl reboot -i")
             else:
-                self._screen._ws.send_method("machine.shutdown")
+                self._screen._ws.send_method("machine.device_power.off", {"Qidi X-CF Pro": "off"})
                 os.system("systemctl poweroff -i")
         elif response_id == Gtk.ResponseType.OK:
             if method == "reboot":
@@ -72,4 +72,4 @@ class Panel(ScreenPanel):
             if method == "reboot":
                 self._screen._ws.send_method("machine.reboot")
             else:
-                self._screen._ws.send_method("machine.shutdown")
+                self._screen._ws.send_method("machine.device_power.off", {"Qidi X-CF Pro": "off"})
