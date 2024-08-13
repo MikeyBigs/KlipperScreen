@@ -1,6 +1,6 @@
 # KlipperScreen With Modfied shutdown.py 
 
-Channged the shutdown button to power off a power device setup in moonraker.conf and printer.cfg. 
+Changed the shutdown button to power off a power device setup in moonraker.conf and printer.cfg. 
 
 Example Using for BBT Manta M8P with CB1
 ```
