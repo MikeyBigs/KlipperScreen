@@ -2,7 +2,7 @@
 
 Changed the shutdown button to power off a power device setup in moonraker.conf and printer.cfg. 
 
-Example Using for BBT Manta M8P with CB1
+Example Using for BBT Manta M8P with CB1 and BTT Relay. 
 ```
 -------add to to printer.cfg-----
 [output_pin _power]
